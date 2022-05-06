@@ -15,4 +15,3 @@ Settings:
     - 'msg <player> while you are online you got <amount> of prana, now you have <current>/<max>'
   Command-on-offline:
     - 'msg <player> while you are offline you got <amount> of prana, now you have <current>/<max>'
-    -
