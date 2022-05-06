@@ -59,6 +59,10 @@ public final class PranaRegenerator extends JavaPlugin {
             if (!DataHandler.isLoaded(player)) { DataHandler.getPlayerData(player); }
         }
 
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            database.sendDummyData();
+        }, 0, 300*20);
+
 
     }
 
