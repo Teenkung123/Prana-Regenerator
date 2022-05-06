@@ -34,11 +34,12 @@ public class Database {
     public void createTable() {
         Database database = new Database();
         try {
-            Statement statement = database.getConnection().createStatement();
+            Statement statement = connection.createStatement();
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS PranaRegenerator (" +
-                    "ID int NOT NULL AUTO_INCREMENT" +
-                    "UUID VARCHAR(40)" +
-                    "LOGOUT BIGINT(40)" +
+                    "ID int NOT NULL AUTO_INCREMENT," +
+                    "UUID VARCHAR(40)," +
+                    "LOGOUT BIGINT(40)," +
+                    "PRIMARY KEY (ID)" +
                     ")");
             statement.close();
         } catch (SQLException e) {

@@ -16,7 +16,7 @@ import static com.teenkung.pranaregenerator.PranaRegenerator.colorize;
 
 public class OnlineHandlers {
 
-    private static Boolean running;
+    private static Boolean running = false;
     private static Long currentTime;
 
     public static void runTask() {
