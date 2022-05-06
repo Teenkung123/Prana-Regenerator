@@ -91,7 +91,7 @@ public class ConfigLoader {
 
     //This method is for getting give amount of Prana will return 1 as default value
     public static Double getGiveAmount() {
-        if (Instance.getConfig().contains("Setting.Give-Amount")) {
+        if (Instance.getConfig().contains("Settings.Give-Amount")) {
             return Instance.getConfig().getDouble("Settings.Give-Amount");
         }
         System.out.println(colorize("&cCould not load Give Amount due to it does not exist!"));
@@ -100,7 +100,7 @@ public class ConfigLoader {
 
     //This method is for getting Command on Online will return empty array as default value
     public static ArrayList<String> getCommandOnOnline() {
-        if (Instance.getConfig().contains("Setting.Command-on-Online")) {
+        if (Instance.getConfig().contains("Settings.Command-on-online")) {
             return new ArrayList<>(Instance.getConfig().getStringList("Settings.Command-on-Online"));
         }
         System.out.println(colorize("&cCould not load Command On Online due to it does not exist!"));
@@ -109,7 +109,7 @@ public class ConfigLoader {
 
     //This method is for getting Command on Offline will return empty Array as default value
     public static ArrayList<String> getCommandOnOffline() {
-        if (Instance.getConfig().contains("Settings.Command-on-Offline")) {
+        if (Instance.getConfig().contains("Settings.Command-on-offline")) {
             return new ArrayList<>(Instance.getConfig().getStringList("Settings.Command-on-Offline"));
         }
         System.out.println(colorize("&cCould not load Command on Offline due to it does not exist!"));
