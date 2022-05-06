@@ -1,5 +1,8 @@
 package com.teenkung.pranaregenerator.utils;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,8 +58,11 @@ public class PranaPlayerData {
     //This method is for getting Time Left to calculate in OnlineHandler Class
     public Long getTimeLeft() { return TimeLeft; }
 
-    //This method is for getting Login time of PranaPlayerData;
+    //This method is for getting Login time of PranaPlayerData
     public Long getLoginTime() { return LoginTime; }
+
+    //This method is for getting Player class of PranaPlayerData
+    public Player getPlayer() { return Bukkit.getPlayer(uuid); }
 
     //This method is for getting diffrent between Login time and now in seconds
     public Long getDiffrentLoginTime() { return Instant.now().getEpochSecond() - LoginTime; }

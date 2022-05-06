@@ -33,12 +33,22 @@ public class OnlineHandlers {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     PranaPlayerData data = DataHandler.getPlayerData(player);
                     if (data == null) { continue; }
-                    if (data.getDiffrentLoginTime() + data.getTimeLeft() >= ConfigLoader.getRegenerationRate()) {
+                    if ((data.getDiffrentLoginTime() + data.getTimeLeft()) % ConfigLoader.getRegenerationRate() == 0) {
                         data.setTimeLeft(0L);
                         Currency playerCurrency = new Currency(player.getUniqueId());
-                        if (playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID()) < playerCurrency.getBalance(ConfigLoader.getCurrencyID())) {
-                            playerCurrency.giveBalance(ConfigLoader.getCurrencyID(), 1D, "Console", "Online-Regeneration");
-                            player.sendMessage(colorize("&aYou get 1 prana! now you have &e" + playerCurrency.getBalance(ConfigLoader.getCurrencyID())));
+                        double amount = ConfigLoader.getGiveAmount();
+                        if (playerCurrency.getBalance(ConfigLoader.getCurrencyID()) + amount > playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID())) {
+                            amount = playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID()) - playerCurrency.getBalance(ConfigLoader.getCurrencyID());
+                        }
+                        if (playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID()) > playerCurrency.getBalance(ConfigLoader.getCurrencyID())) {
+                            playerCurrency.giveBalance(ConfigLoader.getCurrencyID(), amount, "Console", "Online-Regeneration");
+                            for (String cmd : ConfigLoader.getCommandOnOnline()) {
+                                cmd = cmd.replaceAll("<player>", player.getName());
+                                cmd = cmd.replaceAll("<amount>", String.valueOf(amount));
+                                cmd = cmd.replaceAll("<max>", playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID()).toString());
+                                cmd = cmd.replaceAll("<current>", playerCurrency.getBalance(ConfigLoader.getCurrencyID()).toString());
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+                            }
                         }
                     }
                 }

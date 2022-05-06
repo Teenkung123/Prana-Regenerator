@@ -1,11 +1,13 @@
 package com.teenkung.pranaregenerator;
 
+import com.teenkung.pranaregenerator.Handlers.DataHandler;
 import com.teenkung.pranaregenerator.Handlers.JoinEvent;
 import com.teenkung.pranaregenerator.Handlers.OnlineHandlers;
 import com.teenkung.pranaregenerator.Handlers.QuitEvent;
 import com.teenkung.pranaregenerator.utils.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
@@ -51,6 +53,11 @@ public final class PranaRegenerator extends JavaPlugin {
 
         //This code is for running online calculations task
         OnlineHandlers.runTask();
+
+        //This code is for loop every online player and load their data
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (!DataHandler.isLoaded(player)) { DataHandler.getPlayerData(player); }
+        }
 
 
     }

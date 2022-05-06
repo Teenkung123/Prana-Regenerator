@@ -2,6 +2,8 @@ package com.teenkung.pranaregenerator.utils;
 
 import com.teenkung.pranaregenerator.PranaRegenerator;
 
+import java.util.ArrayList;
+
 import static com.teenkung.pranaregenerator.PranaRegenerator.colorize;
 
 public class ConfigLoader {
@@ -85,6 +87,33 @@ public class ConfigLoader {
         }
         System.out.println(colorize("&cCould not load Currency due to it does not exist!"));
         return "";
+    }
+
+    //This method is for getting give amount of Prana will return 1 as default value
+    public static Double getGiveAmount() {
+        if (Instance.getConfig().contains("Setting.Give-Amount")) {
+            return Instance.getConfig().getDouble("Settings.Give-Amount");
+        }
+        System.out.println(colorize("&cCould not load Give Amount due to it does not exist!"));
+        return 1D;
+    }
+
+    //This method is for getting Command on Online will return empty array as default value
+    public static ArrayList<String> getCommandOnOnline() {
+        if (Instance.getConfig().contains("Setting.Command-on-Online")) {
+            return new ArrayList<>(Instance.getConfig().getStringList("Settings.Command-on-Online"));
+        }
+        System.out.println(colorize("&cCould not load Command On Online due to it does not exist!"));
+        return new ArrayList<>();
+    }
+
+    //This method is for getting Command on Offline will return empty Array as default value
+    public static ArrayList<String> getCommandOnOffline() {
+        if (Instance.getConfig().contains("Settings.Command-on-Offline")) {
+            return new ArrayList<>(Instance.getConfig().getStringList("Settings.Command-on-Offline"));
+        }
+        System.out.println(colorize("&cCould not load Command on Offline due to it does not exist!"));
+        return new ArrayList<>();
     }
 
 }

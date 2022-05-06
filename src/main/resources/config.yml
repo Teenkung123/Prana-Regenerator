@@ -9,3 +9,10 @@ Settings:
   Currency: Prana
   Regeneration-Rate: 480
   Allowed-Offline-Calculations: true
+  Give-Amount: 1
+  #Available Placeholders: <player> <amount> <max> <current>
+  Command-on-online:
+    - 'msg <player> while you are online you got <amount> of prana, now you have <current>/<max>'
+  Command-on-offline:
+    - 'msg <player> while you are offline you got <amount> of prana, now you have <current>/<max>'
+    -

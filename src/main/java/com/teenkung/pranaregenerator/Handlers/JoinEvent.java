@@ -3,6 +3,7 @@ package com.teenkung.pranaregenerator.Handlers;
 import com.downyoutube.devcurrency.devcurrency.PlayerDataMySQL.API.Currency;
 import com.teenkung.pranaregenerator.utils.ConfigLoader;
 import com.teenkung.pranaregenerator.utils.PranaPlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,11 +38,19 @@ public class JoinEvent implements Listener {
     private void calculateOfflineCalculations(PranaPlayerData data) {
         Currency currencyData = new Currency(data.getUUID());
         double amount = Math.floor(Long.valueOf(data.getDiffrentLogoutTime() / ConfigLoader.getRegenerationRate()).doubleValue());
+        amount = amount * ConfigLoader.getGiveAmount();
         data.setTimeLeft(data.getDiffrentLogoutTime() % ConfigLoader.getRegenerationRate() + data.getTimeLeft());
         if (currencyData.getBalance(ConfigLoader.getCurrencyID()) + amount > currencyData.getMaxBalance(ConfigLoader.getCurrencyID())) {
             amount = currencyData.getMaxBalance(ConfigLoader.getCurrencyID()) + currencyData.getBalance(ConfigLoader.getCurrencyID());
         }
         currencyData.giveBalance(ConfigLoader.getCurrencyID(), amount , "Console", "Prana-OfflineCalc");
+        for (String cmd : ConfigLoader.getCommandOnOnline()) {
+            cmd = cmd.replaceAll("<player>", data.getPlayer().getName());
+            cmd = cmd.replaceAll("<amount>", String.valueOf(amount));
+            cmd = cmd.replaceAll("<max>", currencyData.getMaxBalance(ConfigLoader.getCurrencyID()).toString());
+            cmd = cmd.replaceAll("<current>", currencyData.getBalance(ConfigLoader.getCurrencyID()).toString());
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+        }
     }
 
 }
