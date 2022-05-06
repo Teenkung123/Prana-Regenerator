@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,10 +15,13 @@ public final class PranaRegenerator extends JavaPlugin {
 
     //This variable is getting Instance of this class to use in another class
     private static PranaRegenerator Instance;
+    //This variable is getting Database from Database class
+    Database database;
 
     //This method is for send Instance of this class to another class
     //construction: PranaRegenerator.getInstance()
     public static PranaRegenerator getInstance() { return Instance; }
+
 
     @Override
     public void onEnable() {
@@ -28,11 +32,21 @@ public final class PranaRegenerator extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
+        //This code for connect database
+        database = new Database();
+        try {
+            database.Connect();
+            database.createTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
     @Override
     public void onDisable() {
+        database.Disconnect();
     }
 
 

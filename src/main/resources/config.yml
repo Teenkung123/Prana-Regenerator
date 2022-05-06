@@ -4,3 +4,8 @@ Database:
   Username: root
   Password: minecraft
   Database: PRegen
+
+Settings:
+  Currency: Prana
+  Regeneration-Rate: 480
+  Allowed-Offline-Calculations: true
