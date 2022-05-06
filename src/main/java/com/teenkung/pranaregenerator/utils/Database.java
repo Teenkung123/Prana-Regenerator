@@ -1,4 +1,4 @@
-package com.teenkung.pranaregenerator;
+package com.teenkung.pranaregenerator.utils;
 
 import java.sql.*;
 
