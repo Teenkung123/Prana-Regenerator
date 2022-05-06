@@ -17,7 +17,7 @@ public class PranaPlayerData {
 
     //This code defines UUID and Logout time of Custom Class
     private final UUID uuid;
-    private Long LoginTime;
+    private Long DummyTime;
     private Long LogoutTime;
     private Long TimeLeft;
 
@@ -29,7 +29,7 @@ public class PranaPlayerData {
         statement.setString(1, uuid.toString());
         ResultSet rs = statement.executeQuery();
         TimeLeft = 0L;
-        LoginTime = Instant.now().getEpochSecond();
+        DummyTime = Instant.now().getEpochSecond();
         if (rs.next()) {
             LogoutTime = rs.getLong("LOGOUT");
         } else {
@@ -58,20 +58,20 @@ public class PranaPlayerData {
     //This method is for getting Time Left to calculate in OnlineHandler Class
     public Long getTimeLeft() { return TimeLeft; }
 
-    //This method is for getting Login time of PranaPlayerData
-    public Long getLoginTime() { return LoginTime; }
+    //This method is for getting Dummy time of PranaPlayerData
+    public Long getDummyTime() { return DummyTime; }
 
     //This method is for getting Player class of PranaPlayerData
     public Player getPlayer() { return Bukkit.getPlayer(uuid); }
 
-    //This method is for getting diffrent between Login time and now in seconds
-    public Long getDiffrentLoginTime() { return Instant.now().getEpochSecond() - LoginTime; }
+    //This method is for getting diffrent between Dummy time and now in seconds
+    public Long getDiffrentDummyTime() { return Instant.now().getEpochSecond() - DummyTime; }
 
     //This method is for setting Time Left to calculate in OnlineHandler Class
     public void setTimeLeft(Long timeLeft) { TimeLeft = timeLeft; }
 
-    //This method is for setting Login Time of PranaPlayerData
-    public void setLoginTime(Long loginTime) { LoginTime = loginTime; }
+    //This method is for setting Dummy Time of PranaPlayerData
+    public void setDummyTime(Long loginTime) { DummyTime = loginTime; }
 
     //This method is for setting Logout Time of PranaPlayerData
     public void setLogoutTime(Long time) {

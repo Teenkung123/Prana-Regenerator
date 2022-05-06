@@ -28,7 +28,7 @@ public class JoinEvent implements Listener {
             player.kickPlayer(colorize("&cCould not load player data!"));
             return;
         }
-        data.setLoginTime(Instant.now().getEpochSecond());
+        data.setDummyTime(Instant.now().getEpochSecond());
         if (data.getDiffrentLogoutTime() >= ConfigLoader.getRegenerationRate()) {
             calculateOfflineCalculations(data);
         }
@@ -44,12 +44,12 @@ public class JoinEvent implements Listener {
             amount = currencyData.getMaxBalance(ConfigLoader.getCurrencyID()) + currencyData.getBalance(ConfigLoader.getCurrencyID());
         }
         currencyData.giveBalance(ConfigLoader.getCurrencyID(), amount , "Console", "Prana-OfflineCalc");
-        for (String cmd : ConfigLoader.getCommandOnOnline()) {
+        for (String cmd : ConfigLoader.getCommandOnOffline()) {
             cmd = cmd.replaceAll("<player>", data.getPlayer().getName());
-            cmd = cmd.replaceAll("<amount>", String.valueOf(amount));
-            cmd = cmd.replaceAll("<max>", currencyData.getMaxBalance(ConfigLoader.getCurrencyID()).toString());
-            cmd = cmd.replaceAll("<current>", currencyData.getBalance(ConfigLoader.getCurrencyID()).toString());
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+            cmd = cmd.replaceAll("<amount>", String.valueOf(Double.valueOf(amount).intValue()));
+            cmd = cmd.replaceAll("<max>", Double.valueOf(currencyData.getMaxBalance(ConfigLoader.getCurrencyID()).intValue()).toString());
+            cmd = cmd.replaceAll("<current>", Double.valueOf(currencyData.getBalance(ConfigLoader.getCurrencyID()).intValue()).toString());
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), colorize(cmd));
         }
     }
 

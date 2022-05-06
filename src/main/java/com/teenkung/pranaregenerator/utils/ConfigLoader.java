@@ -102,16 +102,16 @@ public class ConfigLoader {
     //This method is for getting Command on Online will return empty array as default value
     public static List<String> getCommandOnOnline() {
         if (Instance.getConfig().contains("Settings.Command-on-online")) {
-            return Instance.getConfig().getStringList("Settings.Command-on-Online");
+            return new ArrayList<>(Instance.getConfig().getStringList("Settings.Command-on-online"));
         }
         System.out.println(colorize("&cCould not load Command On Online due to it does not exist!"));
         return new ArrayList<>();
     }
 
     //This method is for getting Command on Offline will return empty Array as default value
-    public static List<String> getCommandOnOffline() {
+    public static ArrayList<String> getCommandOnOffline() {
         if (Instance.getConfig().contains("Settings.Command-on-offline")) {
-            return Instance.getConfig().getStringList("Settings.Command-on-Offline");
+            return new ArrayList<>(Instance.getConfig().getStringList("Settings.Command-on-offline"));
         }
         System.out.println(colorize("&cCould not load Command on Offline due to it does not exist!"));
         return new ArrayList<>();
