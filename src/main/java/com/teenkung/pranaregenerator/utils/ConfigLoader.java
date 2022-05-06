@@ -1,4 +1,6 @@
-package com.teenkung.pranaregenerator;
+package com.teenkung.pranaregenerator.utils;
+
+import com.teenkung.pranaregenerator.PranaRegenerator;
 
 import static com.teenkung.pranaregenerator.PranaRegenerator.colorize;
 
@@ -74,6 +76,15 @@ public class ConfigLoader {
         }
         System.out.println(colorize("&cCould not load Allowed Offline Calculation due to it does not exist!"));
         return true;
+    }
+
+    //This method is for getting Currency ID in config file it will return "" as default value
+    public static String getCurrencyID() {
+        if (Instance.getConfig().contains("Settings.Currency")) {
+            return Instance.getConfig().getString("Settings.Currency");
+        }
+        System.out.println(colorize("&cCould not load Currency due to it does not exist!"));
+        return "";
     }
 
 }
