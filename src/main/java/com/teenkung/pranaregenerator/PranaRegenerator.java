@@ -1,6 +1,7 @@
 package com.teenkung.pranaregenerator;
 
 import com.teenkung.pranaregenerator.Handlers.JoinEvent;
+import com.teenkung.pranaregenerator.Handlers.OnlineHandlers;
 import com.teenkung.pranaregenerator.Handlers.QuitEvent;
 import com.teenkung.pranaregenerator.utils.Database;
 import org.bukkit.Bukkit;
@@ -47,6 +48,9 @@ public final class PranaRegenerator extends JavaPlugin {
         //This code is for register event to classes
         Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
         Bukkit.getPluginManager().registerEvents(new QuitEvent(), this);
+
+        //This code is for running online calculations task
+        OnlineHandlers.runTask();
 
 
     }

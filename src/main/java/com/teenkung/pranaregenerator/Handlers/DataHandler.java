@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class DataHandlers {
+public class DataHandler {
 
     private static final HashMap<Player, PranaPlayerData> Data = new HashMap<>();
 
@@ -30,6 +30,10 @@ public class DataHandlers {
 
     public static void removePlayerData(Player player) {
         Data.remove(player);
+    }
+
+    public static Boolean isLoaded(Player player) {
+        return Data.containsKey(player);
     }
 
 }

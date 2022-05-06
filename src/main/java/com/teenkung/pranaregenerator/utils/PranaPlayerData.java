@@ -14,6 +14,7 @@ public class PranaPlayerData {
 
     //This code defines UUID and Logout time of Custom Class
     private final UUID uuid;
+    private Long LoginTime;
     private Long LogoutTime;
     private Long TimeLeft;
 
@@ -24,11 +25,11 @@ public class PranaPlayerData {
         PreparedStatement statement = getConnection().prepareStatement("SELECT LOGOUT FROM PranaRegenerator WHERE UUID = ?;");
         statement.setString(1, uuid.toString());
         ResultSet rs = statement.executeQuery();
+        TimeLeft = 0L;
+        LoginTime = Instant.now().getEpochSecond();
         if (rs.next()) {
-            TimeLeft = 0L;
             LogoutTime = rs.getLong("LOGOUT");
         } else {
-            TimeLeft = 0L;
             LogoutTime = Instant.now().getEpochSecond();
             PreparedStatement statement1 = getConnection().prepareStatement("INSERT INTO PranaRegenerator (ID, UUID, LOGOUT) VALUES (" +
                     "default," +
@@ -54,8 +55,17 @@ public class PranaPlayerData {
     //This method is for getting Time Left to calculate in OnlineHandler Class
     public Long getTimeLeft() { return TimeLeft; }
 
+    //This method is for getting Login time of PranaPlayerData;
+    public Long getLoginTime() { return LoginTime; }
+
+    //This method is for getting diffrent between Login time and now in seconds
+    public Long getDiffrentLoginTime() { return Instant.now().getEpochSecond() - LoginTime; }
+
     //This method is for setting Time Left to calculate in OnlineHandler Class
     public void setTimeLeft(Long timeLeft) { TimeLeft = timeLeft; }
+
+    //This method is for setting Login Time of PranaPlayerData
+    public void setLoginTime(Long loginTime) { LoginTime = loginTime; }
 
     //This method is for setting Logout Time of PranaPlayerData
     public void setLogoutTime(Long time) {

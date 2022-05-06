@@ -1,7 +1,6 @@
 package com.teenkung.pranaregenerator.Handlers;
 
 import com.downyoutube.devcurrency.devcurrency.PlayerDataMySQL.API.Currency;
-import com.downyoutube.devcurrency.devcurrency.PlayerDataMySQL.API.PlayerData;
 import com.teenkung.pranaregenerator.utils.ConfigLoader;
 import com.teenkung.pranaregenerator.utils.PranaPlayerData;
 import org.bukkit.entity.Player;
@@ -9,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.sql.SQLException;
+import java.time.Instant;
 
 import static com.teenkung.pranaregenerator.PranaRegenerator.colorize;
 
@@ -23,11 +22,12 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        PranaPlayerData data = DataHandlers.getPlayerData(player);
+        PranaPlayerData data = DataHandler.getPlayerData(player);
         if (data == null) {
             player.kickPlayer(colorize("&cCould not load player data!"));
             return;
         }
+        data.setLoginTime(Instant.now().getEpochSecond());
         if (data.getDiffrentLogoutTime() >= ConfigLoader.getRegenerationRate()) {
             calculateOfflineCalculations(data);
         }
