@@ -1,0 +1,7 @@
+name: PranaRegenerator
+version: '${version}'
+main: com.teenkung.pranaregenerator.PranaRegenerator
+api-version: 1.17
+prefix: PRegen
+authors: [ Teenkung123 ]
+website: mc-developcraft.net
