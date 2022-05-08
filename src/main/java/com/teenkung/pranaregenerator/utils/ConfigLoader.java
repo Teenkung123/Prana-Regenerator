@@ -117,4 +117,19 @@ public class ConfigLoader {
         return new ArrayList<>();
     }
 
+    //this class for shorter code need to write
+    private static String getString(String path,String defaultValue) {
+        if (Instance.getConfig().contains(path)) {
+            return Instance.getConfig().getString(path);
+        } else {
+            System.out.println(colorize("&cCould not load " + path + " because it does not exist or valid!"));
+            return defaultValue;
+        }
+    }
+
+    //This class for getting Hour language format
+    public static String getHourLanguage() { return getString("Settings.Language.Hour", "Hour"); }
+    public static String getMinuteLanguage() { return getString("Settings.Language.Minute", "Minute"); }
+    public static String getSecondLanguage() { return getString("Settings.Language.Second", "Second"); }
+
 }

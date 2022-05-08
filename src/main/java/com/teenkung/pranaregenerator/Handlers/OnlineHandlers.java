@@ -60,8 +60,8 @@ public class OnlineHandlers {
             for (String cmd : ConfigLoader.getCommandOnOnline()) {
                 cmd = cmd.replaceAll("<player>", player.getName());
                 cmd = cmd.replaceAll("<amount>", String.valueOf(amount.intValue()));
-                cmd = cmd.replaceAll("<max>", Double.valueOf(playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID()).intValue()).toString());
-                cmd = cmd.replaceAll("<current>", Double.valueOf(playerCurrency.getBalance(ConfigLoader.getCurrencyID()).intValue()).toString());
+                cmd = cmd.replaceAll("<max>", String.valueOf((int) Math.round(playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID()))));
+                cmd = cmd.replaceAll("<current>", String.valueOf((int) Math.round(playerCurrency.getBalance(ConfigLoader.getCurrencyID()))));
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), colorize(cmd));
             }
         });

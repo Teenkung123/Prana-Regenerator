@@ -1,5 +1,6 @@
 package com.teenkung.pranaregenerator.utils;
 
+import com.downyoutube.devcurrency.devcurrency.PlayerDataMySQL.API.Currency;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -50,7 +51,7 @@ public class PranaPlayerData {
     public UUID getUUID() { return uuid; }
 
     //This method is for getting Logout Time of PranaPlayerData
-    public Long getLogoutTime() { return LogoutTime; }
+    //public Long getLogoutTime() { return LogoutTime; }
 
     //This method is for getting Diffrent between logout time of player and now return as Long (Seconds)
     public Long getDiffrentLogoutTime() { return Instant.now().getEpochSecond() - LogoutTime; }
@@ -59,7 +60,7 @@ public class PranaPlayerData {
     public Long getTimeLeft() { return TimeLeft; }
 
     //This method is for getting Dummy time of PranaPlayerData
-    public Long getDummyTime() { return DummyTime; }
+    //public Long getDummyTime() { return DummyTime; }
 
     //This method is for getting Player class of PranaPlayerData
     public Player getPlayer() { return Bukkit.getPlayer(uuid); }
@@ -84,6 +85,40 @@ public class PranaPlayerData {
             LogoutTime = time;
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    //===================================== About Time Method =========================================
+
+    private String getTime(Long second) {
+        int Hour = Double.valueOf(Math.floor(second / 3600D)).intValue();
+        second = second - (3600L * Hour);
+
+        int Minute = Double.valueOf(Math.floor(second / 60D)).intValue();
+        second = second - (60L * Minute);
+        return Hour + " " + ConfigLoader.getHourLanguage() + " " + Minute + " " + ConfigLoader.getMinuteLanguage() + " " + second + " " + ConfigLoader.getSecondLanguage();
+
+    }
+
+
+    //This method is for getting regen time
+    public String getRegenTime() {
+        Currency playerCurrency = new Currency(uuid);
+        if (playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID()) <= playerCurrency.getBalance(ConfigLoader.getCurrencyID())) {
+            return "0 " + ConfigLoader.getHourLanguage() + " 0 " + ConfigLoader.getMinuteLanguage() + " 0 " + ConfigLoader.getSecondLanguage();
+        } else {
+            return getTime(ConfigLoader.getRegenerationRate() - (getDiffrentDummyTime() % ConfigLoader.getRegenerationRate()));
+        }
+    }
+
+    //This method is for getting full regen time
+    public String getFullRegenTime() {
+        Currency playerCurrency = new Currency(uuid);
+        if (playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID()) <= playerCurrency.getBalance(ConfigLoader.getCurrencyID())) {
+            return "0 " + ConfigLoader.getHourLanguage() + " 0 " + ConfigLoader.getMinuteLanguage() + " 0 " + ConfigLoader.getSecondLanguage();
+        } else {
+            return getTime((ConfigLoader.getRegenerationRate() - (getDiffrentDummyTime() % ConfigLoader.getRegenerationRate()))
+                    + ((playerCurrency.getMaxBalance(ConfigLoader.getCurrencyID()).longValue() - playerCurrency.getBalance(ConfigLoader.getCurrencyID()).longValue()) - 1) * ConfigLoader.getRegenerationRate().longValue());
         }
     }
 }

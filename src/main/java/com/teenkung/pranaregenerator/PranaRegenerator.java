@@ -5,6 +5,7 @@ import com.teenkung.pranaregenerator.Handlers.JoinEvent;
 import com.teenkung.pranaregenerator.Handlers.OnlineHandlers;
 import com.teenkung.pranaregenerator.Handlers.QuitEvent;
 import com.teenkung.pranaregenerator.utils.Database;
+import com.teenkung.pranaregenerator.utils.PlaceholderAPIRegister;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -59,9 +60,12 @@ public final class PranaRegenerator extends JavaPlugin {
             if (!DataHandler.isLoaded(player)) { DataHandler.getPlayerData(player); }
         }
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-            database.sendDummyData();
-        }, 0, 300*20);
+        //Register placeholder API
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PlaceholderAPIRegister().register();
+        }
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> database.sendDummyData(), 0, 300*20);
 
 
     }

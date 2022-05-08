@@ -63,7 +63,7 @@ public class Database {
                 PreparedStatement statement1 = connection.prepareStatement("INSERT INTO PranaRegenerator (ID, UUID, LOGOUT) VALUES (" +
                         "default," +
                         "'DUMMY_DATA'," +
-                        Instant.now().getEpochSecond() +
+                        Instant.now().getEpochSecond() + "," +
                         ");");
                 statement1.executeUpdate();
                 statement1.close();

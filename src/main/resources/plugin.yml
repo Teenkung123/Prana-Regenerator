@@ -5,3 +5,7 @@ api-version: 1.17
 prefix: PRegen
 authors: [ Teenkung123 ]
 website: mc-developcraft.net
+softdepend:
+  - PlaceholderAPI
+depend:
+  - DevCurrency

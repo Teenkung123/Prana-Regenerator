@@ -37,19 +37,21 @@ public class JoinEvent implements Listener {
     //This method is for calculate Prana during offline calculation
     private void calculateOfflineCalculations(PranaPlayerData data) {
         Currency currencyData = new Currency(data.getUUID());
-        double amount = Math.floor(Long.valueOf(data.getDiffrentLogoutTime() / ConfigLoader.getRegenerationRate()).doubleValue());
-        amount = amount * ConfigLoader.getGiveAmount();
-        data.setTimeLeft(data.getDiffrentLogoutTime() % ConfigLoader.getRegenerationRate() + data.getTimeLeft());
-        if (currencyData.getBalance(ConfigLoader.getCurrencyID()) + amount > currencyData.getMaxBalance(ConfigLoader.getCurrencyID())) {
-            amount = currencyData.getMaxBalance(ConfigLoader.getCurrencyID()) + currencyData.getBalance(ConfigLoader.getCurrencyID());
-        }
-        currencyData.giveBalance(ConfigLoader.getCurrencyID(), amount , "Console", "Prana-OfflineCalc");
-        for (String cmd : ConfigLoader.getCommandOnOffline()) {
-            cmd = cmd.replaceAll("<player>", data.getPlayer().getName());
-            cmd = cmd.replaceAll("<amount>", String.valueOf(Double.valueOf(amount).intValue()));
-            cmd = cmd.replaceAll("<max>", Double.valueOf(currencyData.getMaxBalance(ConfigLoader.getCurrencyID()).intValue()).toString());
-            cmd = cmd.replaceAll("<current>", Double.valueOf(currencyData.getBalance(ConfigLoader.getCurrencyID()).intValue()).toString());
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), colorize(cmd));
+        if (currencyData.getBalance(ConfigLoader.getCurrencyID()) < currencyData.getMaxBalance(ConfigLoader.getCurrencyID())) {
+            double amount = Math.floor(Long.valueOf(data.getDiffrentLogoutTime() / ConfigLoader.getRegenerationRate()).doubleValue());
+            amount = amount * ConfigLoader.getGiveAmount();
+            data.setTimeLeft(data.getDiffrentLogoutTime() % ConfigLoader.getRegenerationRate() + data.getTimeLeft());
+            if (currencyData.getBalance(ConfigLoader.getCurrencyID()) + amount > currencyData.getMaxBalance(ConfigLoader.getCurrencyID())) {
+                amount = currencyData.getMaxBalance(ConfigLoader.getCurrencyID()) - currencyData.getBalance(ConfigLoader.getCurrencyID());
+            }
+            currencyData.giveBalance(ConfigLoader.getCurrencyID(), amount, "Console", "Prana-OfflineCalc");
+            for (String cmd : ConfigLoader.getCommandOnOffline()) {
+                cmd = cmd.replaceAll("<player>", data.getPlayer().getName());
+                cmd = cmd.replaceAll("<amount>", String.valueOf(Double.valueOf(amount).intValue()));
+                cmd = cmd.replaceAll("<max>", String.valueOf((int) Math.round(currencyData.getMaxBalance(ConfigLoader.getCurrencyID()))));
+                cmd = cmd.replaceAll("<current>", String.valueOf((int) Math.round(currencyData.getBalance(ConfigLoader.getCurrencyID()))));
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), colorize(cmd));
+            }
         }
     }
 
