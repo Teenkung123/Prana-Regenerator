@@ -16,6 +16,7 @@ repositories {
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
     maven {
+        name = 'papi'
         url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
     }
 }
@@ -38,7 +39,7 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion as Property<Integer>
+        options.release = targetJavaVersion
     }
 }
 
