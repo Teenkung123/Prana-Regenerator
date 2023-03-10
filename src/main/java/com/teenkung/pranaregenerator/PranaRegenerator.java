@@ -45,6 +45,8 @@ public final class PranaRegenerator extends JavaPlugin {
             database.Connect();
             database.createTable();
         } catch (SQLException e) {
+            System.out.println(colorize("&4Could not connect to MySQL Database! Disabling Plugin"));
+            Bukkit.getPluginManager().disablePlugin(this);
             e.printStackTrace();
         }
 
